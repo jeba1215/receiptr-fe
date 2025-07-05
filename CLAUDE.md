@@ -25,6 +25,13 @@ This is a React Native app built with Expo called "receiptr" - appears to be a r
 - Use `npm test` to run tests in watch mode
 - Every new use case MUST have corresponding test coverage
 
+### Quality Checks (MANDATORY)
+When finishing changes, ALWAYS run these commands to verify code quality:
+1. `npm test -- --watchAll=false` - Run all tests
+2. `npx tsc --noEmit` - Check TypeScript compilation
+3. `npm run lint` - Check code style and linting
+All three commands must pass before considering any implementation complete.
+
 ## Architecture
 
 ### Directory Structure

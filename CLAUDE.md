@@ -20,7 +20,7 @@ This is a React Native app built with Expo called "receiptr" - appears to be a r
 ### Testing
 - **CRITICAL**: Write tests for ALL features - this is a strict requirement
 - Tests are written using Jest and React Native Testing Library
-- Test files are located in `useCase/__tests__/`
+- **Test files MUST be located next to the file they're testing** (e.g., `Recipe.tsx` → `Recipe.test.tsx`)
 - Jest configuration is in package.json with expo preset
 - Use `npm test` to run tests in watch mode
 - Every new use case MUST have corresponding test coverage

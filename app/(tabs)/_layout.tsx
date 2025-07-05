@@ -18,12 +18,12 @@ export default function TabLayout() {
         },
       }}
     >
-    <Tabs.Screen
-        name="index"
+      <Tabs.Screen
+        name="recipes"
         options={{
-          title: 'Home',
+          title: 'Recipes',
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
+            <Ionicons name={focused ? 'restaurant' : 'restaurant-outline'} color={color} size={24} />
           ),
         }}
       />

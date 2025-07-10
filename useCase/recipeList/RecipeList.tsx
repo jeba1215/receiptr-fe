@@ -32,6 +32,8 @@ export const RecipeList = ({ recipes, onRecipePress }: RecipeListProps) => {
         numColumns={2}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={true}
+        bounces={true}
       />
     </View>
   );

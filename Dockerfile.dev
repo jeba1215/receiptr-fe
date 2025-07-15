@@ -1,0 +1,23 @@
+# Dockerfile.dev for Expo Web Development (with hot reloading)
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (including dev dependencies for development)
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Expose port for Expo dev server
+EXPOSE 19006
+
+# Install Expo CLI globally
+RUN npm install -g @expo/cli
+
+# Command to start Expo web in development mode
+CMD ["npx", "expo", "start", "--web", "--host", "0.0.0.0", "--port", "19006"]

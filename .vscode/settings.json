@@ -3,5 +3,32 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
+  },
+  "github.copilot.chat.agent.terminal.allowList": {
+    // Base commands
+    "npm": true,
+    "npx": true,
+    "expo": true,
+    "biome": true,
+    "jest": true,
+    "yarn": true,
+    "ls": true,
+    "pwd": true,
+    "cat": true,
+    "mkdir": true,
+    "touch": true,
+    "node --version": true,
+    "npm --version": true,
+    "expo --version": true,
+    // Pattern-based commands
+    "/^npm (install|test|run|start|build|audit|update|ci).*$/": true,
+    "/^npx (expo|biome|jest|typescript|tsc).*$/": true,
+    "/^expo (start|build|publish|install|upgrade|doctor|login|logout).*$/": true,
+    "/^biome (check|format|lint|ci).*$/": true,
+    "/^jest.*$/": true,
+    "/^tsc.*$/": true,
+    "/^git (status|log|diff|show|branch|checkout|add|commit|push|pull|fetch|merge|rebase|stash).*$/": true,
+    "/^cd .*$/": true,
+    "/^echo.*$/": true
   }
 }

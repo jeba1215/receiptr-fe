@@ -36,4 +36,8 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# Generated OpenAPI files
+openapi-spec.json
+swagger-ui.html
+
 app-example

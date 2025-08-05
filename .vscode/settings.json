@@ -29,8 +29,6 @@
     "/^tsc.*$/": true,
     "/^git (status|log|diff|show|branch|checkout|add|commit|push|pull|fetch|merge|rebase|stash).*$/": true,
     "/^cd .*$/": true,
-    "/^echo.*$/": true,
-    // Scripts
-    "./generate-openapi-spec.sh": true,
+    "/^echo.*$/": true
   }
 }

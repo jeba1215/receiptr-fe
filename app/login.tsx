@@ -3,6 +3,7 @@
  * Integrates authentication system with Expo Router
  */
 
+import { router } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
@@ -15,11 +16,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { router } from 'expo-router';
-import { LoginApiHandler } from '../src/external/handlers/loginApiHandler';
-import { saveTokensToStorage } from '../src/session/TokenStore';
 import { useSessionContext } from '../src/context/SessionContext';
+import { LoginApiHandler } from '../src/external/handlers/loginApiHandler';
 import type { LoginCredentials } from '../src/models/LoginResult';
+import { saveTokensToStorage } from '../src/session/TokenStore';
 
 interface LoginFormData {
   email: string;
@@ -71,7 +71,7 @@ export default function LoginRoute() {
     isLoading: false,
     isSubmitted: false,
   });
-  
+
   const loginHandler = React.useMemo(() => new LoginApiHandler(), []);
 
   const updateFormData = useCallback((field: keyof LoginFormData, value: string) => {
@@ -109,8 +109,11 @@ export default function LoginRoute() {
       const loginResult = await loginHandler.login(credentials);
       await saveTokensToStorage(loginResult);
 
-      // Refresh the session state which will trigger automatic navigation via auth guard
+      // Refresh the session state to update authentication status
       await refreshSessionState();
+
+      // Navigate to the recipes page after successful login
+      router.replace('/(auth-guard)/(tabs)/recipes');
     } catch (error) {
       console.error('Login failed:', error);
 

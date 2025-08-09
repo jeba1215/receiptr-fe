@@ -29,6 +29,7 @@
     "/^tsc.*$/": true,
     "/^git (status|log|diff|show|branch|checkout|add|commit|push|pull|fetch|merge|rebase|stash).*$/": true,
     "/^cd .*$/": true,
-    "/^echo.*$/": true
+    "/^echo.*$/": true,
+    "npm test *": true,
   }
 }

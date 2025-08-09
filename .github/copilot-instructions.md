@@ -122,16 +122,10 @@ When working with Copilot:
 
 ## Monorepo Structure Rules
 
-2. **Test File Location**
+1. **Test File Location**
     - Test files should be co-located with their implementation
     - Use `.test.tsx` extension for component tests
     - Use `.test.ts` extension for utility function tests
-
-### Naming Conventions
-
-- **Component Names**: Use clear and descriptive names
-- **File Names**: Use clear and descriptive names
-- **Folder Names**: Use clear and descriptive names
 
 #### Best Practices
 - ✅ Provide clear context and requirements
@@ -171,6 +165,10 @@ When working with Copilot:
 - We usually call these "Root"-components, all components below that root component should take their data as props. 
 For good dependency injection
 - Never use real language in strings, instead use text keys of the format use.case.primary.secondary.third
+- No Contexts in this application. The only exceptions are currently the following: 
+- - theming
+- - session management
+
 
 ### Test Writing Principles
 - Don't use fireEvent instead use userEvent
@@ -180,3 +178,37 @@ For good dependency injection
 - call createProps() in each test and then modify the returned props object to fit the test case
 - we have a global mock in our test setup that mocks the `useTranslation` hook from `react-i18next`
 - all texts in our tests will be the textKey itself use.case.primary.secondary.third 
+- test files should be located in the same directory as the component or utility function being tested
+- test files should be named .test.tsx, so page.tsx has page.test.tsx
+
+
+## API Architecture
+
+The frontend follows a strict layered architecture for API integration:
+
+### Data Flow & Type Ownership
+1. **API Layer** (`src/external/api/`): Auto-generated DTOs (e.g., `RecipeDto`, `UserDto`) - **NEVER leave this layer**
+2. **Domain Models** (`src/models/`): Application-owned types (`User`, `Receipt`, `AuthTokens`) - canonical throughout app
+3. **API Handlers** (`src/external/handlers/`): Map DTOs to domain models with explicit types (no `any`, no inference)
+4. **Route Types** (`useCase/*/types.ts`): Each route owns its specific data types (`RecipeListItem`, `RecipeDetail`)
+
+### Key Rules
+- **No DTO Leakage**: DTOs confined to API layer only
+- **Explicit Mappers**: All mappers have declared return types: `const mapUserDtoToUser(dto: UserDto): User`
+- **Handler Injection**: Routes receive API handlers as props (dependency injection pattern)
+- **Type Safety**: Never use `any` or rely on inference in mappers
+
+### API Handler Pattern
+- One handler per use case: `LoginApiHandler`, `RecipeListApiHandler`, `RecipeApiHandler`
+- Handlers encapsulate API calls and DTO→domain model mapping
+- Route components receive handlers as props from router
+
+### Route-Specific Types
+- Each route/use case declares its own data types
+- Map from domain models to route-specific needs
+- Example: `Receipt` → `RecipeListItem` for list view, `RecipeDetail` for detail view
+
+### Configuration
+- API client configured in `src/apiConfig.ts`
+- Generate client with `npm run generate-api`
+- Set auth tokens via `setAuthToken(token)`

@@ -1,10 +1,10 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
+import { SessionContextProvider } from '../src/context/SessionContext';
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="recipe/[id]" options={{ title: 'Recipe' }} />
-    </Stack>
+    <SessionContextProvider>
+      <Slot />
+    </SessionContextProvider>
   );
 }

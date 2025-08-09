@@ -1,71 +1,56 @@
 import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { Recipe } from './Recipe';
+import { mapReceiptToRecipeDetail } from './mappers';
+import type { RecipeDetail, RecipeRootProps } from './types';
 
-export type RecipeData = {
-  id: string;
-  title: string;
-  thumbnail: string;
-  description: string;
-  ingredients: string[];
-  instructions: string[];
-};
+export type RecipeData = RecipeDetail; // For backward compatibility with existing Recipe component
 
-const mockRecipes: Record<string, RecipeData> = {
-  '1': {
-    id: '1',
-    title: 'Spaghetti Carbonara',
-    thumbnail: 'https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Pasta',
-    description: 'A classic Italian pasta dish with eggs, cheese, and pancetta.',
-    ingredients: [
-      '400g spaghetti',
-      '200g pancetta, diced',
-      '3 large eggs',
-      '100g Pecorino Romano cheese, grated',
-      'Black pepper to taste',
-      'Salt for pasta water'
-    ],
-    instructions: [
-      'Cook spaghetti in salted boiling water until al dente.',
-      'Meanwhile, cook pancetta in a large pan until crispy.',
-      'In a bowl, whisk eggs with grated cheese and black pepper.',
-      'Drain pasta and add to the pan with pancetta.',
-      'Remove from heat and quickly stir in egg mixture.',
-      'Serve immediately with extra cheese and pepper.'
-    ]
-  },
-  '2': {
-    id: '2',
-    title: 'Chicken Tikka Masala',
-    thumbnail: 'https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Chicken',
-    description: 'Tender chicken in a creamy, spiced tomato sauce.',
-    ingredients: [
-      '500g chicken breast, cubed',
-      '200ml yogurt',
-      '400ml coconut milk',
-      '400g canned tomatoes',
-      '2 onions, diced',
-      'Garam masala, cumin, turmeric',
-      'Garlic and ginger'
-    ],
-    instructions: [
-      'Marinate chicken in yogurt and spices for 2 hours.',
-      'Cook marinated chicken until browned.',
-      'Sauté onions, garlic, and ginger.',
-      'Add tomatoes and spices, simmer 10 minutes.',
-      'Add coconut milk and cooked chicken.',
-      'Simmer until sauce thickens, serve with rice.'
-    ]
+export const RecipeRoot: React.FC<RecipeRootProps> = ({ recipeApiHandler }) => {
+  const { id } = useLocalSearchParams();
+  const [recipe, setRecipe] = useState<RecipeData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      if (!id || typeof id !== 'string') {
+        setError('Invalid recipe ID');
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const receipt = await recipeApiHandler.getReceipt(parseInt(id), 'current-user-id'); // TODO: Get actual user ID
+        const mappedRecipe = mapReceiptToRecipeDetail(receipt);
+        setRecipe(mappedRecipe);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch recipe');
+        console.error('Error fetching recipe:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id, recipeApiHandler]);
+
+  if (error) {
+    return <div>Error: {error}</div>; // Replace with proper error component
   }
-};
 
-export const RecipeRoot = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  
-  const recipe = id ? mockRecipes[id] : null;
+  if (isLoading) {
+    return <div>Loading recipe...</div>; // Replace with proper loading component
+  }
 
   if (!recipe) {
-    return <Recipe recipe={null} />;
+    return <div>Recipe not found</div>; // Replace with proper not found component
   }
 
-  return <Recipe recipe={recipe} />;
+  return (
+    <Recipe recipe={recipe} />
+  );
 };

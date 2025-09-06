@@ -6,16 +6,19 @@
 import { router } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
 } from 'react-native';
+import { 
+  Button, 
+  Card, 
+  HelperText, 
+  Text, 
+  TextInput, 
+  Title 
+} from 'react-native-paper';
 import { useSessionContext } from '../src/context/SessionContext';
 import { LoginApiHandler } from '../src/external/handlers/loginApiHandler';
 import type { LoginCredentials } from '../src/models/LoginResult';
@@ -138,28 +141,27 @@ export default function LoginRoute() {
 
   const renderInputField = (
     field: keyof LoginFormData,
-    placeholder: string,
+    label: string,
     secureTextEntry = false
   ) => (
-    <View style={styles.inputContainer}>
+    <>
       <TextInput
-        style={[
-          styles.input,
-          state.errors[field] ? styles.inputError : null,
-        ]}
-        placeholder={placeholder}
+        mode="outlined"
+        label={label}
         value={state.formData[field]}
         onChangeText={(value) => updateFormData(field, value)}
         secureTextEntry={secureTextEntry}
         autoCapitalize="none"
         autoCorrect={false}
         keyboardType={field === 'email' ? 'email-address' : 'default'}
-        editable={!state.isLoading}
+        disabled={state.isLoading}
+        error={!!state.errors[field]}
+        style={styles.input}
       />
-      {state.errors[field] && (
-        <Text style={styles.errorText}>{state.errors[field]}</Text>
-      )}
-    </View>
+      <HelperText type="error" visible={!!state.errors[field]}>
+        {state.errors[field]}
+      </HelperText>
+    </>
   );
 
   return (
@@ -167,32 +169,31 @@ export default function LoginRoute() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.subtitle}>Sign in to your account</Text>
+      <Card style={styles.card}>
+        <Card.Content>
+          <Title style={styles.title}>Welcome Back</Title>
+          <Text style={styles.subtitle}>Sign in to your account</Text>
 
-        {state.errors.general && (
-          <Text style={styles.generalError}>{state.errors.general}</Text>
-        )}
-
-        {renderInputField('email', 'Email')}
-        {renderInputField('password', 'Password', true)}
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            state.isLoading ? styles.buttonDisabled : null,
-          ]}
-          onPress={handleSubmit}
-          disabled={state.isLoading}
-        >
-          {state.isLoading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text style={styles.buttonText}>Sign In</Text>
+          {state.errors.general && (
+            <HelperText type="error" visible={true} style={styles.generalError}>
+              {state.errors.general}
+            </HelperText>
           )}
-        </TouchableOpacity>
-      </View>
+
+          {renderInputField('email', 'Email')}
+          {renderInputField('password', 'Password', true)}
+
+          <Button
+            mode="contained"
+            onPress={handleSubmit}
+            disabled={state.isLoading}
+            loading={state.isLoading}
+            style={styles.button}
+          >
+            Sign In
+          </Button>
+        </Card.Content>
+      </Card>
     </KeyboardAvoidingView>
   );
 }
@@ -200,74 +201,28 @@ export default function LoginRoute() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
-  },
-  content: {
-    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 32,
-    paddingVertical: 64,
+  },
+  card: {
+    paddingVertical: 24,
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1a1a1a',
     textAlign: 'center',
     marginBottom: 8,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6b7280',
     textAlign: 'center',
-    marginBottom: 48,
-  },
-  inputContainer: {
     marginBottom: 24,
   },
   input: {
-    height: 56,
-    backgroundColor: 'white',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-  inputError: {
-    borderColor: '#ef4444',
-    borderWidth: 2,
-  },
-  errorText: {
-    color: '#ef4444',
-    fontSize: 14,
-    marginTop: 8,
-    marginLeft: 4,
+    marginBottom: 8,
   },
   generalError: {
-    color: '#ef4444',
-    fontSize: 14,
     textAlign: 'center',
-    marginBottom: 24,
-    padding: 12,
-    backgroundColor: '#fef2f2',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#fecaca',
+    marginBottom: 16,
   },
   button: {
-    height: 56,
-    backgroundColor: '#3b82f6',
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  buttonDisabled: {
-    backgroundColor: '#9ca3af',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
+    marginTop: 16,
   },
 });

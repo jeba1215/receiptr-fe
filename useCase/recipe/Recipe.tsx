@@ -1,4 +1,5 @@
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Card, Surface, Text, Title } from 'react-native-paper';
 
 export type RecipeData = {
   id: string;
@@ -16,90 +17,93 @@ type RecipeProps = {
 export const Recipe = ({ recipe }: RecipeProps) => {
   if (!recipe) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>Recipe not found</Text>
-      </View>
+      <Surface style={styles.container}>
+        <Text variant="headlineSmall" style={styles.errorText}>
+          Recipe not found
+        </Text>
+      </Surface>
     );
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Image source={{ uri: recipe.thumbnail }} style={styles.image} />
-      
-      <View style={styles.content}>
-        <Text style={styles.title}>{recipe.title}</Text>
-        <Text style={styles.description}>{recipe.description}</Text>
+    <Surface style={styles.container}>
+      <ScrollView>
+        <Card style={styles.imageCard}>
+          <Card.Cover source={{ uri: recipe.thumbnail }} style={styles.image} />
+        </Card>
         
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Ingredients</Text>
-          {recipe.ingredients.map((ingredient, index) => (
-            <Text key={index} style={styles.ingredient}>
-              • {ingredient}
+        <Card style={styles.content}>
+          <Card.Content>
+            <Title style={styles.title}>{recipe.title}</Title>
+            <Text variant="bodyLarge" style={styles.description}>
+              {recipe.description}
             </Text>
-          ))}
-        </View>
+          </Card.Content>
+        </Card>
         
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Instructions</Text>
-          {recipe.instructions.map((instruction, index) => (
-            <Text key={index} style={styles.instruction}>
-              {index + 1}. {instruction}
+        <Card style={styles.section}>
+          <Card.Content>
+            <Text variant="headlineSmall" style={styles.sectionTitle}>
+              Ingredients
             </Text>
-          ))}
-        </View>
-      </View>
-    </ScrollView>
+            {recipe.ingredients.map((ingredient, index) => (
+              <Text key={index} variant="bodyMedium" style={styles.ingredient}>
+                • {ingredient}
+              </Text>
+            ))}
+          </Card.Content>
+        </Card>
+        
+        <Card style={styles.section}>
+          <Card.Content>
+            <Text variant="headlineSmall" style={styles.sectionTitle}>
+              Instructions
+            </Text>
+            {recipe.instructions.map((instruction, index) => (
+              <Text key={index} variant="bodyMedium" style={styles.instruction}>
+                {index + 1}. {instruction}
+              </Text>
+            ))}
+          </Card.Content>
+        </Card>
+      </ScrollView>
+    </Surface>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+  },
+  imageCard: {
+    margin: 0,
+    borderRadius: 0,
   },
   image: {
-    width: '100%',
     height: 250,
   },
   content: {
-    padding: 16,
+    margin: 16,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
     marginBottom: 8,
   },
   description: {
-    fontSize: 16,
-    color: '#ccc',
-    marginBottom: 24,
-    lineHeight: 24,
+    marginBottom: 8,
   },
   section: {
-    marginBottom: 24,
+    margin: 16,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#fff',
     marginBottom: 12,
   },
   ingredient: {
-    fontSize: 16,
-    color: '#ccc',
     marginBottom: 8,
-    lineHeight: 24,
   },
   instruction: {
-    fontSize: 16,
-    color: '#ccc',
     marginBottom: 12,
-    lineHeight: 24,
   },
   errorText: {
-    fontSize: 18,
-    color: '#fff',
     textAlign: 'center',
     marginTop: 50,
   },

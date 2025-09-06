@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { render } from "@/src/testHelpers";
 import { Recipe } from "../recipe/Recipe";
 
 const mockRecipe = {

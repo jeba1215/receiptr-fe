@@ -1,4 +1,5 @@
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
+import { Card, Surface, Title, Text } from 'react-native-paper';
 
 export type Recipe = {
   id: string;
@@ -13,18 +14,22 @@ type RecipeListProps = {
 
 export const RecipeList = ({ recipes, onRecipePress }: RecipeListProps) => {
   const renderRecipe = ({ item }: { item: Recipe }) => (
-    <TouchableOpacity
+    <Card 
       style={styles.recipeItem}
       onPress={() => onRecipePress(item.id)}
     >
-      <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-      <Text style={styles.title}>{item.title}</Text>
-    </TouchableOpacity>
+      <Card.Cover source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+      <Card.Content style={styles.cardContent}>
+        <Text variant="titleSmall" style={styles.title}>
+          {item.title}
+        </Text>
+      </Card.Content>
+    </Card>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Recipe List</Text>
+    <Surface style={styles.container}>
+      <Title style={styles.header}>Recipe List</Title>
       <FlatList
         data={recipes}
         renderItem={renderRecipe}
@@ -35,20 +40,16 @@ export const RecipeList = ({ recipes, onRecipePress }: RecipeListProps) => {
         showsVerticalScrollIndicator={true}
         bounces={true}
       />
-    </View>
+    </Surface>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
     padding: 16,
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -61,22 +62,15 @@ const styles = StyleSheet.create({
   },
   recipeItem: {
     flex: 1,
-    backgroundColor: '#3a3f47',
-    borderRadius: 8,
-    padding: 12,
     marginHorizontal: 4,
-    alignItems: 'center',
   },
   thumbnail: {
-    width: 120,
     height: 120,
-    borderRadius: 8,
-    marginBottom: 8,
+  },
+  cardContent: {
+    alignItems: 'center',
   },
   title: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
     textAlign: 'center',
   },
 });

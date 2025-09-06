@@ -1,10 +1,13 @@
 import { Slot } from 'expo-router';
+import { PaperProvider } from 'react-native-paper';
 import { SessionContextProvider } from '../src/context/SessionContext';
 
 export default function RootLayout() {
   return (
-    <SessionContextProvider>
-      <Slot />
-    </SessionContextProvider>
+    <PaperProvider>
+      <SessionContextProvider>
+        <Slot />
+      </SessionContextProvider>
+    </PaperProvider>
   );
 }

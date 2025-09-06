@@ -21,6 +21,7 @@ This is a React Native app built with Expo called "receiptr" - appears to be a r
 - **CRITICAL**: Write tests for ALL features - this is a strict requirement
 - Tests are written using Jest and React Native Testing Library
 - **Test files MUST be located next to the file they're testing** (e.g., `Recipe.tsx` → `Recipe.test.tsx`)
+- **ALWAYS use `render` from `@/src/testHelpers`** instead of React Native Testing Library directly
 - Jest configuration is in package.json with expo preset
 - Use `npm test` to run tests in watch mode
 - Every new use case MUST have corresponding test coverage
@@ -80,5 +81,12 @@ All three commands must pass before considering any implementation complete.
 - React Native with Expo (v53)
 - TypeScript with strict mode
 - Expo Router for navigation
+- **React Native Paper** - Material Design components (ALWAYS use RNP components instead of custom UI)
 - Jest + React Native Testing Library for testing
 - ESLint for code quality
+
+### UI Components (STRICT REQUIREMENTS)
+- **ALWAYS use React Native Paper components** for UI elements
+- Import from `react-native-paper`: `Button`, `Card`, `Text`, `Surface`, `TextInput`, etc.
+- **AVOID custom styling** - use RNP props and variants instead
+- Only add minimal custom styles when absolutely necessary

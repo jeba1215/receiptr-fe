@@ -3,7 +3,7 @@
  * Maps from internal domain models to route-specific types
  */
 
-import type { Receipt } from '../../src/models';
+import type { Receipt } from '../../src/models/Receipt';
 import type { RecipeListItem } from './types';
 
 /**

@@ -50,6 +50,7 @@ All three commands must pass before considering any implementation complete.
 - TypeScript is used throughout with strict mode enabled
 - Path alias `@/*` maps to project root for cleaner imports
 - Expo Router handles navigation with file-based routing
+- **NO index.ts files** - Always import directly from source files, never use index files for imports/exports
 
 ### Use Case Architecture (STRICT REQUIREMENTS)
 - **NO IMPORTS** between use cases - each use case must be completely isolated

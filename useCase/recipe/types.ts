@@ -3,7 +3,7 @@
  * These types are owned by the Recipe use case
  */
 
-import type { RecipeApiHandler } from '../../src/external/handlers';
+import type { RecipeApiHandler } from '../../src/external/handlers/recipeApiHandler';
 
 // Route-specific Recipe type for the individual recipe view
 export interface RecipeDetail {

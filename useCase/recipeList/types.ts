@@ -3,7 +3,7 @@
  * These types are owned by the RecipeList use case
  */
 
-import type { RecipeListApiHandler } from '../../src/external/handlers';
+import type { RecipeListApiHandler } from '../../src/external/handlers/recipeListApiHandler';
 
 // Route-specific Recipe type for the recipe list view
 export interface RecipeListItem {

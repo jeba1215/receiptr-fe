@@ -4,7 +4,7 @@
  */
 
 import type { Receipt } from '../../models/Receipt';
-import { ReceiptsService } from '../api';
+import { ReceiptsService } from '../api/services/ReceiptsService';
 import { mapReceiptDtoToReceipt } from '../mappers';
 
 export class RecipeApiHandler {

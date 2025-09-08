@@ -6,7 +6,9 @@
 import type { AuthTokens } from '../models/Auth';
 import type { Receipt } from '../models/Receipt';
 import type { User } from '../models/User';
-import type { LoginResponse as LoginResponseDto, ReceiptResponse as ReceiptDto, User as UserDto } from './api';
+import type { LoginResponse as LoginResponseDto } from './api/models/LoginResponse';
+import type { ReceiptResponse as ReceiptDto } from './api/models/ReceiptResponse';
+import type { User as UserDto } from './api/models/User';
 
 // Re-export login mapper
 export { mapLoginDtoToLoginResult } from './mappers/mapLoginDtoToLoginResult';

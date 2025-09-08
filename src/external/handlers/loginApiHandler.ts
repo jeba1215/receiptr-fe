@@ -5,7 +5,10 @@
 
 import type { AuthTokens, CreateUserData, RefreshTokenData } from '../../models/Auth';
 import type { LoginCredentials, LoginResult, RefreshTokenRequest } from '../../models/LoginResult';
-import { CreateUserCommand, LoginCommand, PrivateAuthenticationService, PublicAuthenticationService } from '../api';
+import { CreateUserCommand } from '../api/models/CreateUserCommand';
+import { LoginCommand } from '../api/models/LoginCommand';
+import { PrivateAuthenticationService } from '../api/services/PrivateAuthenticationService';
+import { PublicAuthenticationService } from '../api/services/PublicAuthenticationService';
 import { mapLoginResponseDtoToAuthTokens } from '../mappers';
 import { mapLoginDtoToLoginResult } from '../mappers/mapLoginDtoToLoginResult';
 

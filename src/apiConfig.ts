@@ -4,8 +4,10 @@
  */
 
 import { apiUrl } from './config';
-import { OpenAPI } from './external/api';
-import { LoginApiHandler, RecipeApiHandler, RecipeListApiHandler } from './external/handlers';
+import { OpenAPI } from './external/api/core/OpenAPI';
+import { LoginApiHandler } from './external/handlers/loginApiHandler';
+import { RecipeApiHandler } from './external/handlers/recipeApiHandler';
+import { RecipeListApiHandler } from './external/handlers/recipeListApiHandler';
 
 // Configure the base URL for the API client from environment configuration
 OpenAPI.BASE = apiUrl;

@@ -4,7 +4,7 @@
  */
 
 import type { LoginResult } from '../../models/LoginResult';
-import type { LoginResponse as LoginResponseDto } from '../api';
+import type { LoginResponse as LoginResponseDto } from '../api/models/LoginResponse';
 
 /**
  * Maps LoginResponseDto to internal LoginResult model

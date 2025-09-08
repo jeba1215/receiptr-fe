@@ -3,7 +3,7 @@
  * This function is critical for determining when to refresh tokens
  */
 
-import { sessionInterceptor } from '../sessionInterceptor';
+// import { sessionInterceptor } from '../sessionInterceptor';
 
 // We need to access the internal function for testing
 // Since it's not exported, we'll test it through the sessionInterceptor behavior

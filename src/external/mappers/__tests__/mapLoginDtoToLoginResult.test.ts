@@ -3,7 +3,7 @@
  */
 
 import { mapLoginDtoToLoginResult } from '../mapLoginDtoToLoginResult';
-import type { LoginResponse as LoginResponseDto } from '../../api';
+import type { LoginResponse as LoginResponseDto } from '../../api/models/LoginResponse';
 
 describe('mapLoginDtoToLoginResult timezone handling', () => {
   beforeAll(() => {
